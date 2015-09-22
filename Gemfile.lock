@@ -2,12 +2,18 @@ GEM
   remote: https://rubygems.org/
   specs:
     asciidoctor (1.5.2)
+    binary-protocol (0.0.1)
+    erlang-etf (1.1.1)
+      binary-protocol
+      erlang-terms (>= 1.1.0)
+    erlang-terms (1.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   asciidoctor
+  erlang-etf
 
 BUNDLED WITH
    1.10.6
