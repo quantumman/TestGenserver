@@ -13,6 +13,7 @@ defmodule WebappExternalProcess do
       worker(WebappExternalProcess.Repo, []),
       # Here you could define other workers and supervisors as children
       # worker(WebappExternalProcess.Worker, [arg1, arg2, arg3]),
+      worker(RubyServer, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -26,5 +27,14 @@ defmodule WebappExternalProcess do
   def config_change(changed, _new, removed) do
     WebappExternalProcess.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  def test(_) do
+    {:ok, server} = RubyServer.start_link
+
+    RubyServer.cast(server, ~S"""
+    require "asciidoctor"
+    Asciidoctor.convert #{source}, header_footer: true, safe: 'safe'
+    """)
   end
 end

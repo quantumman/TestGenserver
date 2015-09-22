@@ -1,13 +1,4 @@
-<h2>Show note</h2>
-
-<ul>
-
-  <li>
-    <strong>Content:</strong>
-    <%= @note.content %>
-  </li>
-
-</ul>
+<%= raw(render_assciidoc @note.content) %>
 
 <%= link "Edit", to: note_path(@conn, :edit, @note) %>
 <%= link "Back", to: note_path(@conn, :index) %>
