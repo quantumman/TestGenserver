@@ -7,19 +7,25 @@ defmodule WebappExternalProcess.NoteView do
   def render_assciidoc(source) do
     {:ok, server} = RubyServer.start_link
 
+    escaped_source = escape_ruby_string source
     RubyServer.call(server, ~s"""
     require 'asciidoctor'
-    Asciidoctor.convert "#{source}", header_footer: false, safe: 'safe'
+    Asciidoctor.convert '#{escaped_source}', header_footer: false, safe: 'safe'
     """)
   end
 
   def render_title(source) do
     {:ok, server} = RubyServer.start_link
 
+    escaped_source = escape_ruby_string source
     RubyServer.call(server, ~s"""
     require 'asciidoctor'
-    doc = Asciidoctor.load "#{source}", header_footer: false, safe: 'safe'
+    doc = Asciidoctor.load '#{escaped_source}', header_footer: false, safe: 'safe'
     doc.doctitle
     """)
+  end
+
+  defp escape_ruby_string(str) do
+    String.replace(str, "\'", "\\'")
   end
 end
