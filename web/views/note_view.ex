@@ -10,7 +10,8 @@ defmodule WebappExternalProcess.NoteView do
     escaped_source = escape_ruby_string source
     RubyServer.call(server, ~s"""
     require 'asciidoctor'
-    Asciidoctor.convert '#{escaped_source}', header_footer: false, safe: 'safe'
+    html = Asciidoctor.convert '#{escaped_source}', header_footer: false, safe: 'safe'
+    html || ""
     """)
   end
 
@@ -21,7 +22,7 @@ defmodule WebappExternalProcess.NoteView do
     RubyServer.call(server, ~s"""
     require 'asciidoctor'
     doc = Asciidoctor.load '#{escaped_source}', header_footer: false, safe: 'safe'
-    doc.doctitle
+    doc.doctitle || ""
     """)
   end
 
