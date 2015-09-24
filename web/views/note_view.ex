@@ -5,10 +5,8 @@ defmodule WebappExternalProcess.NoteView do
   alias Porcelain.Result
 
   def render_assciidoc(source) do
-    {:ok, server} = RubyServer.start_link
-
     escaped_source = escape_ruby_string source
-    RubyServer.call(server, ~s"""
+    RubyServer.call(RubyServer, ~s"""
     require 'asciidoctor'
     html = Asciidoctor.convert '#{escaped_source}', header_footer: false, safe: 'safe'
     html || ""
@@ -16,10 +14,8 @@ defmodule WebappExternalProcess.NoteView do
   end
 
   def render_title(source) do
-    {:ok, server} = RubyServer.start_link
-
     escaped_source = escape_ruby_string source
-    RubyServer.call(server, ~s"""
+    RubyServer.call(RubyServer, ~s"""
     require 'asciidoctor'
     doc = Asciidoctor.load '#{escaped_source}', header_footer: false, safe: 'safe'
     doc.doctitle || ""

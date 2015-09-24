@@ -1,6 +1,8 @@
 defmodule WebappExternalProcess do
   use Application
 
+  @registry_name RubyServer
+
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
   def start(_type, _args) do
@@ -13,7 +15,7 @@ defmodule WebappExternalProcess do
       worker(WebappExternalProcess.Repo, []),
       # Here you could define other workers and supervisors as children
       # worker(WebappExternalProcess.Worker, [arg1, arg2, arg3]),
-      worker(RubyServer, [])
+      worker(RubyServer, [[name: @registry_name]])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

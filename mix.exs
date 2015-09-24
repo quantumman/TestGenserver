@@ -18,7 +18,7 @@ defmodule WebappExternalProcess.Mixfile do
   def application do
     [mod: {WebappExternalProcess, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex, :porcelain]]
+                    :phoenix_ecto, :postgrex]]
   end
 
   # Specifies which paths to compile per environment
